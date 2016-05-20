@@ -4,11 +4,15 @@
   text-align: center;
 }
 
-#userChoice img {
+.in-line {
   display: inline-block;
 }
 
 img {
   height: 150px;
   width: 150px;
+}
+
+.highlight {
+  background-color: blue;
 }

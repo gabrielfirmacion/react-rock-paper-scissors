@@ -18,14 +18,10 @@
             return <div>
               <ComputerChoice />
               <Outcome />
-              <UserChoice />
+              <UserChoiceList />
             </div>;
         }
       });
-
-      var choices = { rock: { id: "rock", src: "http://llerrah.com/images/large_rock_in_grass_lg_clr_me.gif"},
-                     paper: { id: "paper", src: "http://braillepaper.com/wp-content/uploads/2014/01/stack-braille-paper.png"},
-                     scissors: { id: "scissors", src: "http://kindersay.com/files/images/scissors.png"}};
 
       var ComputerChoice = React.createClass({
         randomComputerChoice: function(){
@@ -33,8 +29,9 @@
           return choices[keys[ keys.length * Math.random() << 0]]
         },
         getInitialState: function() {
-           var rand = this.randomComputerChoice();
-           return {choice: rand};
+
+           // var rand = this.randomComputerChoice(); --- set initial state when a choice is clicked
+           return {choice: {id: "initial", src:"http://4.bp.blogspot.com/-xUtyL2ROgNs/U1biPYKIqzI/AAAAAAAAoNw/_ZNcM9gKGBg/s1600/content-header-lets-play-logo.png"}};
         },
         render: function () {
             return <div id="computerChoice">
@@ -54,14 +51,55 @@
       });
 
       var UserChoice = React.createClass({
-        render: function () {
-            return <div id="userChoice">
-              <img src="http://llerrah.com/images/large_rock_in_grass_lg_clr_me.gif" id="rock"/>
-              <img src="http://braillepaper.com/wp-content/uploads/2014/01/stack-braille-paper.png" id="paper"/>
-              <img src="http://kindersay.com/files/images/scissors.png" id="scissors"/>
-            </div>;
+        getInitialState: function () {
+           return {hover: false};
+         },
+         handleMouseEnter: function(){
+           this.setState({hover: true});
+         },
+         handleMouseLeave: function(){
+           this.setState({hover: false});
+         },
+        render: function(){
+          var className = '';
+          if (this.state.hover) {
+              className = 'highlight';
+          }
+          return <div className="choice in-line">
+          <img src={this.props.imageUrl}
+              id={this.props.id}
+              onMouseEnter={this.handleMouseEnter}
+              onMouseLeave={this.handleMouseLeave}
+              className={className} />
+
+        </div>
         }
       });
+
+      var UserChoiceList = React.createClass({
+        render: function(){
+          var list = options.userChoicesData.map(function(userChoicesProps){
+            return <UserChoice {...userChoicesProps} />
+          });
+
+          return <div>
+            {list}
+          </div>
+        }
+      });
+
+      var options = {
+        userChoicesData: [{
+          id: "rock",
+          imageUrl: 'http://llerrah.com/images/large_rock_in_grass_lg_clr_me.gif'
+        },{
+          id: "paper",
+          imageUrl: 'http://braillepaper.com/wp-content/uploads/2014/01/stack-braille-paper.png'
+        },{
+          id: "scissors",
+          imageUrl: 'http://kindersay.com/files/images/scissors.png'
+        }]
+      };
 
       ReactDOM.render(
         <App />,
