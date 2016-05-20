@@ -32,10 +32,10 @@
            return {choice: {id: "initial", imageUrl:"http://4.bp.blogspot.com/-xUtyL2ROgNs/U1biPYKIqzI/AAAAAAAAoNw/_ZNcM9gKGBg/s1600/content-header-lets-play-logo.png"}};
         },
         clickChoice: function() {
-            var rand = this.randomComputerChoice();
-            this.setState({
-                 choice: rand
-             })
+          var rand = this.randomComputerChoice();
+          this.setState({
+               choice: rand
+           });
         },
         componentDidMount: function () {
             $('#choices').bind('click', this.clickChoice);
@@ -48,10 +48,40 @@
       });
 
       var Outcome = React.createClass({
+        getInitialState: function(){
+          return {text: "Do you have what it takes to win?",
+                  userWon: false
+          }
+        },
+        gameLogic: function(){
+          var user = null;
+          if ($('.highlight').length === 1) {user = $('.highlight')[0].id};
+          var computer = $('#computerChoice img')[0].id;
+          var gameOutcome = null;
+          if (user === computer){
+            gameOutcome = "It is a tie!";
+          } else if (user === "paper" && computer === "rock") {
+            gameOutcome = "You won!";
+          } else if (user === "rock" && computer === "scissors") {
+            gameOutcome = "You won!";
+          } else if (user === "scissors" && computer === "paper") {
+            gameOutcome = "You won!";
+          } else { gameOutcome= "You lost! Boohoo!";}
+          this.setState({
+               text: gameOutcome
+           });
+        },
+        componentDidMount: function () {
+            $('#choices').bind('click', this.gameLogic);
+        },
+        handleClick: function(){
+            this.replaceState(this.getInitialState())
+        },
         render: function() {
           return (
             <div id="outcome">
-              Hello, world! I am the Outcome!
+              {this.state.text}
+              <br></br><button onClick={this.handleClick}>New Game</button>
             </div>
           );
         }
@@ -66,7 +96,7 @@
          },
          handleClick: function() {
              this.setState({
-                 selectedChoice: true
+                 selectedChoice: (!this.state.selectedChoice)
              })
          },
          handleMouseEnter: function(){
@@ -87,7 +117,6 @@
               onMouseLeave={this.handleMouseLeave}
               onClick={this.handleClick}
               className={className} />
-
           </div>
         }
       });
