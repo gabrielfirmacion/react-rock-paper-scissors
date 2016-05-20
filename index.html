@@ -8,6 +8,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.6.16/browser.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="index.css">
 </head>
   <body>
     <div id="container"></div>
@@ -22,10 +23,20 @@
         }
       });
 
+      var choices = ["rock","paper","scissors"];
+
       var ComputerChoice = React.createClass({
+        randomComputerChoice: function(){
+          return choices[Math.floor(Math.random()*choices.length)]
+        },
+        getInitialState: function() {
+           var rand = this.randomComputerChoice();
+           return {choice: rand};
+        },
         render: function () {
-            return <div>
-              I am the Computer Choice
+            return <div id="computerChoice">
+
+              Computer Choice: {this.state.choice}
             </div>;
         }
       });
@@ -42,11 +53,13 @@
 
       var UserChoice = React.createClass({
         render: function () {
-            return <div>
+            return <div id="userChoice">
               I am the user choice
             </div>;
         }
       });
+
+
 
       ReactDOM.render(
         <App />,
