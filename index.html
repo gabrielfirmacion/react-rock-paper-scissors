@@ -52,7 +52,15 @@
 
       var UserChoice = React.createClass({
         getInitialState: function () {
-           return {hover: false};
+           return {
+              hover: false,
+              selectedChoice: false
+           };
+         },
+         handleClick: function() {
+             this.setState({
+                 selectedChoice: true
+             })
          },
          handleMouseEnter: function(){
            this.setState({hover: true});
@@ -62,7 +70,7 @@
          },
         render: function(){
           var className = '';
-          if (this.state.hover) {
+          if (this.state.hover || this.state.selectedChoice) {
               className = 'highlight';
           }
           return <div className="choice in-line">
@@ -70,9 +78,10 @@
               id={this.props.id}
               onMouseEnter={this.handleMouseEnter}
               onMouseLeave={this.handleMouseLeave}
+              onClick={this.handleClick}
               className={className} />
 
-        </div>
+          </div>
         }
       });
 
