@@ -35,7 +35,6 @@
         },
         render: function () {
             return <div id="computerChoice">
-
               Computer Choice: {this.state.choice}
             </div>;
         }
@@ -54,12 +53,12 @@
       var UserChoice = React.createClass({
         render: function () {
             return <div id="userChoice">
-              I am the user choice
+              <img src="http://llerrah.com/images/large_rock_in_grass_lg_clr_me.gif" id="rock"/>
+              <img src="http://braillepaper.com/wp-content/uploads/2014/01/stack-braille-paper.png" id="paper"/>
+              <img src="http://kindersay.com/files/images/scissors.png" id="scissors"/>
             </div>;
         }
       });
-
-
 
       ReactDOM.render(
         <App />,

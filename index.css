@@ -3,3 +3,9 @@
   width: 60%;
   text-align: center;
 }
+
+#userChoice img {
+  display: inline-block;
+  height: 150px;
+  width: 150px;
+}
