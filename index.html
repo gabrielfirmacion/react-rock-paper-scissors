@@ -25,17 +25,24 @@
 
       var ComputerChoice = React.createClass({
         randomComputerChoice: function(){
-          var keys = Object.keys(choices)
-          return choices[keys[ keys.length * Math.random() << 0]]
+          var keys = Object.keys(options["userChoicesData"])
+          return options["userChoicesData"][keys[ keys.length * Math.random() << 0]]
         },
         getInitialState: function() {
-
-           // var rand = this.randomComputerChoice(); --- set initial state when a choice is clicked
-           return {choice: {id: "initial", src:"http://4.bp.blogspot.com/-xUtyL2ROgNs/U1biPYKIqzI/AAAAAAAAoNw/_ZNcM9gKGBg/s1600/content-header-lets-play-logo.png"}};
+           return {choice: {id: "initial", imageUrl:"http://4.bp.blogspot.com/-xUtyL2ROgNs/U1biPYKIqzI/AAAAAAAAoNw/_ZNcM9gKGBg/s1600/content-header-lets-play-logo.png"}};
+        },
+        clickChoice: function() {
+            var rand = this.randomComputerChoice();
+            this.setState({
+                 choice: rand
+             })
+        },
+        componentDidMount: function () {
+            $('#choices').bind('click', this.clickChoice);
         },
         render: function () {
             return <div id="computerChoice">
-              <img src={this.state.choice.src} id={this.state.choice.id} />
+              <img src={this.state.choice.imageUrl} id={this.state.choice.id} />
             </div>;
         }
       });
@@ -91,7 +98,7 @@
             return <UserChoice {...userChoicesProps} />
           });
 
-          return <div>
+          return <div id="choices">
             {list}
           </div>
         }
